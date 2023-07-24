@@ -83,7 +83,7 @@ function Avoidance_SlashCommand(msg)
 		DEFAULT_CHAT_FRAME:AddMessage("salvation will be removed");
 	elseif (msg == "off") then
 		Avoidance_salv = 0
-		DEFAULT_CHAT_FRAME:AddMessage("salvation will be not be removed");
+		DEFAULT_CHAT_FRAME:AddMessage("salvation will NOT be removed");
 	else
 		Avoidance_ShowCommands();
 	end
@@ -95,12 +95,14 @@ end
 function Avoidance_ShowAvoidance(msg)
 	local baseDefense,armorDefense=UnitDefense("player");
 	local defenseContrib = (baseDefense + armorDefense - UnitLevel("player") * 5) / 25;
+
+	-- Record mitigation stats
+	local block = GetBlockChance();
+	local base, effectiveArmor = UnitArmor("player");
 	
 	-- Calculate total avoidance.
 	local baseAvoidance = 5;
-
 	local dodge = GetDodgeChance();
-	-- local block = GetBlockChance(); Block chance no longer part of avoidance...it's mitigation.
 	local parry = GetParryChance();
 	local totalAvoidance = baseAvoidance + defenseContrib + dodge + parry;
 	
@@ -118,12 +120,16 @@ function Avoidance_ShowAvoidance(msg)
 			print(format("  Dodge : %.2f%%", dodge));
 			print(format("  Parry : %.2f%%", parry));
 			print(format("Total Avoidance : %.2f%%", totalAvoidance));
+			print(format("Block Chance : %.2f%%", block));
+			print(format("Mitigation from Armor: %.2f%%", effectiveArmor));
 		end
 		AvoidanceBaseText:SetText(format("%002.2f%% - base avoidance", baseAvoidance));
 		AvoidanceDefText:SetText(format("%002.2f%% - avoid. from defense", defenseContrib));
 		AvoidanceDodgeText:SetText(format("%002.2f%% - dodge", dodge));
 		AvoidanceParryText:SetText(format("%002.2f%% - parry", parry));
 		AvoidanceTotalText:SetText(format("%002.2f%% - TOTAL AVOIDANCE", totalAvoidance));
+		AvoidanceTotalText:SetText(format("%002.2f%% - block", totalAvoidance));
+		AvoidanceTotalText:SetText(format("%002.2f%% - armor", totalAvoidance));
 	end
 end
 
@@ -191,6 +197,16 @@ function Avoidance_CreateFrame()
 	AvoidanceTotalText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
 	AvoidanceTotalText:SetPoint("TOPLEFT", 10, y);
 	AvoidanceTotalText:SetText("00.00% - TOTAL AVOIDANCE");
+	
+	y = y - 13;
+	AvoidanceTotalText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
+	AvoidanceTotalText:SetPoint("TOPLEFT", 10, y);
+	AvoidanceTotalText:SetText("00.00% - block");
+	
+	y = y - 13;
+	AvoidanceTotalText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
+	AvoidanceTotalText:SetPoint("TOPLEFT", 10, y);
+	AvoidanceTotalText:SetText("00.00% - armor");
 	
 	y = y - 19;
 	frame:SetHeight(y * -1);
