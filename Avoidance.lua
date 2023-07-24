@@ -101,7 +101,7 @@ function Avoidance_ShowAvoidance(msg)
 	local playerLevel = UnitLevel("player");
 	local base, effectiveArmor = UnitArmor("player");
 	local armorReduction = effectiveArmor/((85 * playerLevel) + 400);
-	armorReduction = (armorReduction/(armorReduction + 1));
+	armorReduction = (armorReduction/(armorReduction + 1))*100;
 	
 	-- Calculate total avoidance.
 	local baseAvoidance = 5;
@@ -124,7 +124,7 @@ function Avoidance_ShowAvoidance(msg)
 			print(format("  Parry : %.2f%%", parry));
 			print(format("Total Avoidance : %.2f%%", totalAvoidance));
 			print(format("Block Chance : %.2f%%", block));
-			print(format("Armor: %d(%.2f%%)", effectiveArmor, armorReduction));
+			print(format("Armor: %d(%.1f%%)", effectiveArmor, armorReduction));
 		end
 		AvoidanceBaseText:SetText(format("%002.2f%% - base avoidance", baseAvoidance));
 		AvoidanceDefText:SetText(format("%002.2f%% - avoid. from defense", defenseContrib));
@@ -132,7 +132,7 @@ function Avoidance_ShowAvoidance(msg)
 		AvoidanceParryText:SetText(format("%002.2f%% - parry", parry));
 		AvoidanceTotalText:SetText(format("%002.2f%% - TOTAL AVOIDANCE", totalAvoidance));
 		AvoidanceBlockText:SetText(format("%002.2f%% - block", block));
-		AvoidanceArmorText:SetText(format("%d(%002.2f%%) - armor", effectiveArmor,armorReduction));
+		AvoidanceArmorText:SetText(format("%d(%002.1f%%) - armor", effectiveArmor,armorReduction));
 	end
 end
 
