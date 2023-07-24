@@ -121,15 +121,15 @@ function Avoidance_ShowAvoidance(msg)
 			print(format("  Parry : %.2f%%", parry));
 			print(format("Total Avoidance : %.2f%%", totalAvoidance));
 			print(format("Block Chance : %.2f%%", block));
-			print(format("Armor: %.0f%", effectiveArmor));
+			print(format("Armor: %.0f%%", effectiveArmor));
 		end
 		AvoidanceBaseText:SetText(format("%002.2f%% - base avoidance", baseAvoidance));
 		AvoidanceDefText:SetText(format("%002.2f%% - avoid. from defense", defenseContrib));
 		AvoidanceDodgeText:SetText(format("%002.2f%% - dodge", dodge));
 		AvoidanceParryText:SetText(format("%002.2f%% - parry", parry));
 		AvoidanceTotalText:SetText(format("%002.2f%% - TOTAL AVOIDANCE", totalAvoidance));
-		AvoidanceTotalText:SetText(format("%002.2f%% - block", block));
-		AvoidanceTotalText:SetText(format("%002.0f% - armor", effectiveArmor));
+		AvoidanceBlockText:SetText(format("%002.2f%% - block", block));
+		AvoidanceArmorText:SetText(format("%002.0f% - armor", effectiveArmor));
 	end
 end
 
@@ -199,14 +199,14 @@ function Avoidance_CreateFrame()
 	AvoidanceTotalText:SetText("00.00% - TOTAL AVOIDANCE");
 	
 	y = y - 13;
-	AvoidanceTotalText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
-	AvoidanceTotalText:SetPoint("TOPLEFT", 10, y);
-	AvoidanceTotalText:SetText("00.00% - block");
+	AvoidanceBlockText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
+	AvoidanceBlockText:SetPoint("TOPLEFT", 10, y);
+	AvoidanceBlockText:SetText("00.00% - block");
 	
 	y = y - 13;
-	AvoidanceTotalText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
-	AvoidanceTotalText:SetPoint("TOPLEFT", 10, y);
-	AvoidanceTotalText:SetText("00.00% - armor");
+	AvoidanceArmorText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
+	AvoidanceArmorText:SetPoint("TOPLEFT", 10, y);
+	AvoidanceArmorText:SetText("0 - armor");
 	
 	y = y - 19;
 	frame:SetHeight(y * -1);
