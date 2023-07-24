@@ -98,7 +98,10 @@ function Avoidance_ShowAvoidance(msg)
 
 	-- Record mitigation stats
 	local block = GetBlockChance();
+	local playerLevel = UnitLevel("player");
 	local base, effectiveArmor = UnitArmor("player");
+	local armorReduction = effectiveArmor/((85 * playerLevel) + 400);
+	armorReduction = (armorReduction/(armorReduction + 1));
 	
 	-- Calculate total avoidance.
 	local baseAvoidance = 5;
@@ -121,7 +124,7 @@ function Avoidance_ShowAvoidance(msg)
 			print(format("  Parry : %.2f%%", parry));
 			print(format("Total Avoidance : %.2f%%", totalAvoidance));
 			print(format("Block Chance : %.2f%%", block));
-			print(format("Armor: %.0f%%", effectiveArmor));
+			print(format("Armor: %d(%.2f%%)", effectiveArmor, armorReduction));
 		end
 		AvoidanceBaseText:SetText(format("%002.2f%% - base avoidance", baseAvoidance));
 		AvoidanceDefText:SetText(format("%002.2f%% - avoid. from defense", defenseContrib));
@@ -129,7 +132,7 @@ function Avoidance_ShowAvoidance(msg)
 		AvoidanceParryText:SetText(format("%002.2f%% - parry", parry));
 		AvoidanceTotalText:SetText(format("%002.2f%% - TOTAL AVOIDANCE", totalAvoidance));
 		AvoidanceBlockText:SetText(format("%002.2f%% - block", block));
-		AvoidanceArmorText:SetText(format("%002.0f% - armor", effectiveArmor));
+		AvoidanceArmorText:SetText(format("%d(%002.2f%%) - armor", effectiveArmor,armorReduction));
 	end
 end
 
@@ -206,7 +209,7 @@ function Avoidance_CreateFrame()
 	y = y - 13;
 	AvoidanceArmorText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
 	AvoidanceArmorText:SetPoint("TOPLEFT", 10, y);
-	AvoidanceArmorText:SetText("0 - armor");
+	AvoidanceArmorText:SetText("0(00.00%) - armor");
 	
 	y = y - 19;
 	frame:SetHeight(y * -1);
@@ -249,7 +252,7 @@ function Avoidance_OnEvent()
 	elseif (event == "PLAYER_LOGIN") then
 			DEFAULT_CHAT_FRAME:AddMessage("use /avoid for commands");
 -- 			hide window on log in and set salv remove to off
-			frame:Hide();
+			frame:Show();
 			Avoidance_salv = 0;
 	elseif (event == "PLAYER_AURAS_CHANGED") then
 			if (Avoidance_salv == 1) then
