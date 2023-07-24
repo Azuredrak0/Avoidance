@@ -121,7 +121,7 @@ function Avoidance_ShowAvoidance(msg)
 			print(format("  Parry : %.2f%%", parry));
 			print(format("Total Avoidance : %.2f%%", totalAvoidance));
 			print(format("Block Chance : %.2f%%", block));
-			print(format("Mitigation from Armor: %.2f%%", effectiveArmor));
+			print(format("Armor: %.0f%", effectiveArmor));
 		end
 		AvoidanceBaseText:SetText(format("%002.2f%% - base avoidance", baseAvoidance));
 		AvoidanceDefText:SetText(format("%002.2f%% - avoid. from defense", defenseContrib));
