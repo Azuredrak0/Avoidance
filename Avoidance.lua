@@ -128,8 +128,8 @@ function Avoidance_ShowAvoidance(msg)
 		AvoidanceDodgeText:SetText(format("%002.2f%% - dodge", dodge));
 		AvoidanceParryText:SetText(format("%002.2f%% - parry", parry));
 		AvoidanceTotalText:SetText(format("%002.2f%% - TOTAL AVOIDANCE", totalAvoidance));
-		AvoidanceTotalText:SetText(format("%002.2f%% - block", totalAvoidance));
-		AvoidanceTotalText:SetText(format("%002.2f%% - armor", totalAvoidance));
+		AvoidanceTotalText:SetText(format("%002.2f%% - block", block));
+		AvoidanceTotalText:SetText(format("%002.2f%% - armor", effectiveArmor));
 	end
 end
 
