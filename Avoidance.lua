@@ -1,4 +1,5 @@
 -- Written By: Kip Potter (a.k.a Mythraun [Fury] - Level 80 Deathnight - Stonemaul)
+-- Modified By: Azuredrak0 - added Mitigation stats (block, armor, HP) to the window
 
 -- Global version variable...
 AVOIDANCE_VERSION = "1.0.1.0.C";
@@ -96,18 +97,19 @@ function Avoidance_ShowAvoidance(msg)
 	local baseDefense,armorDefense=UnitDefense("player");
 	local defenseContrib = (baseDefense + armorDefense - UnitLevel("player") * 5) / 25;
 
-	-- Record mitigation stats
-	local block = GetBlockChance();
-	local playerLevel = UnitLevel("player");
-	local base, effectiveArmor = UnitArmor("player");
-	local armorReduction = effectiveArmor/((85 * playerLevel) + 400);
-	armorReduction = (armorReduction/(armorReduction + 1))*100;
-	
 	-- Calculate total avoidance.
 	local baseAvoidance = 5;
 	local dodge = GetDodgeChance();
 	local parry = GetParryChance();
 	local totalAvoidance = baseAvoidance + defenseContrib + dodge + parry;
+
+	-- Calculat mitigation stats
+	local block = GetBlockChance();
+	local playerLevel = UnitLevel("player");
+	local base, effectiveArmor = UnitArmor("player");
+	local armorReduction = effectiveArmor/((85 * playerLevel) + 400);
+	armorReduction = (armorReduction/(armorReduction + 1))*100;
+	local maxHealth = UnitHealthMax("player");
 	
 	-- TODO: Check for shield, and if present, add block chance, otherwise don't add block chance.
 	-- TODO: Should we check for a weapon for parry chance?
@@ -125,6 +127,7 @@ function Avoidance_ShowAvoidance(msg)
 			print(format("Total Avoidance : %.2f%%", totalAvoidance));
 			print(format("Block Chance : %.2f%%", block));
 			print(format("Armor: %d(%.1f%%)", effectiveArmor, armorReduction));
+			print(format("HP: %d", maxHealth));
 		end
 		AvoidanceBaseText:SetText(format("%002.2f%% - base avoidance", baseAvoidance));
 		AvoidanceDefText:SetText(format("%002.2f%% - avoid. from defense", defenseContrib));
@@ -133,6 +136,7 @@ function Avoidance_ShowAvoidance(msg)
 		AvoidanceTotalText:SetText(format("%002.2f%% - TOTAL AVOIDANCE", totalAvoidance));
 		AvoidanceBlockText:SetText(format("%002.2f%% - block", block));
 		AvoidanceArmorText:SetText(format("%d(%002.1f%%) - armor", effectiveArmor,armorReduction));
+		AvoidanceHPText:SetText(format("%d - MAX HP", maxHealth));
 	end
 end
 
@@ -210,6 +214,11 @@ function Avoidance_CreateFrame()
 	AvoidanceArmorText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
 	AvoidanceArmorText:SetPoint("TOPLEFT", 10, y);
 	AvoidanceArmorText:SetText("0(00.00%) - armor");
+
+	y = y - 13;
+	AvoidanceHPText = frame:CreateFontString(nil, nil, "GameFontNormalSmall");
+	AvoidanceHPText:SetPoint("TOPLEFT", 10, y);
+	AvoidanceHPText:SetText("0(00.00%) - HP");
 	
 	y = y - 19;
 	frame:SetHeight(y * -1);
