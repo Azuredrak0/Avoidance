@@ -1,5 +1,5 @@
 -- Written By: Kip Potter (a.k.a Mythraun [Fury] - Level 80 Deathnight - Stonemaul)
--- Modified By: Azuredrak0 - added Mitigation stats (block, armor, HP) to the window
+-- Modified By: Azuredrak0 (a.k.a Drokin) - added Mitigation stats (block, armor, HP) to the window
 
 -- Global version variable...
 AVOIDANCE_VERSION = "1.0.1.0.C";
